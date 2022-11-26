@@ -1,0 +1,86 @@
+SELECT *
+FROM startups
+LIMIT 5;
+
+--Total companies
+
+SELECT COUNT(name) AS 'total_companies'
+FROM startups;
+
+--70 companies!
+
+--Total  value of all companies
+
+SELECT SUM(valuation) AS 'companies value'
+FROM startups;
+
+--974455790000
+
+--Highest amount raised
+
+SELECT MAX(raised) AS 'max_raised'
+FROM startups;
+
+--11500000000
+
+--Max amount raised during ' seed' stage
+
+SELECT MAX(raised) AS 'max_raised_during_seed'
+FROM startups
+WHERE stage = 'seed';
+
+--nothing
+
+--Oldest company
+
+SELECT MIN(founded) 'oldest_company'
+FROM startups;
+
+--Average valuation
+
+SELECT category, AVG(valuation)
+FROM startups
+GROUP BY category;
+
+--Average valuation rounded
+
+SELECT category, ROUND (AVG(valuation),2)
+FROM startups
+GROUP BY category;
+
+--Average valuation rounded and highest to lowest
+
+SELECT category, ROUND(AVG(valuation),2) AS 'average_valuation'
+FROM startups
+GROUP BY 1
+ORDER BY 2 DESC;
+
+--Companies by categories
+
+SELECT category, COUNT(name) AS 'companies'
+FROM startups
+GROUP BY 1
+ORDER BY 2 DESC;
+
+--Categories with more than 3 companies
+
+SELECT category, COUNT(name) AS 'companies'
+FROM startups
+GROUP BY 1
+HAVING companies > 3
+ORDER BY 2 DESC;
+
+--The most competitive markets are: Social, Mobile and Education
+
+--Average size of a startup in each location
+
+SELECT location, ROUND(AVG(employees),0) AS ' average_employees'
+FROM startups
+GROUP BY location;
+
+--Average size of a startup above 500 in each location
+
+SELECT location, ROUND(AVG(employees),0) AS 'average_employees'
+FROM startups
+GROUP BY location
+HAVING average_employees > 500
